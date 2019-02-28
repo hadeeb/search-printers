@@ -31,7 +31,7 @@ const printers = await SearchPrinters();
 const printers1 = await SearchPrinters({ port: 9090 });
 ```
 
-> Use [node-thermal-printer](https://www.npmjs.com/package/node-thermal-printer) to connect to and use the printer
+> Use [node-thermal-printer](https://www.npmjs.com/package/node-thermal-printer) to connect to and use the printers
 
 ## API
 

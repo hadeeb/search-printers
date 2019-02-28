@@ -11,15 +11,26 @@ function getValidInterfaces() {
   return validInterfaces;
 }
 
-function getBroadcastAddress(addr_info) {
-  let addr_splitted = addr_info.address.split(".");
-  let netmask_splitted = addr_info.netmask.split(".");
-  return addr_splitted
-    .map((e, i) => (~netmask_splitted[i] & 0xff) | e)
-    .join(".");
+function getBroadcastAddress(interfaceInfo) {
+  let address = interfaceInfo.address.split(".");
+  let netmask = interfaceInfo.netmask.split(".");
+  return address.map((e, i) => (~netmask[i] & 0xff) | e).join(".");
+}
+
+function getBaseAddress(interfaceInfo) {
+  let address = interfaceInfo.address.split(".");
+  let netmask = interfaceInfo.netmask.split(".");
+  return address.map((e, i) => netmask[i] & e).join(".");
+}
+
+function getNetworkAddress(interfaceInfo) {
+  return {
+    base: getBaseAddress(interfaceInfo),
+    broadcast: getBroadcastAddress(interfaceInfo)
+  };
 }
 
 module.exports = {
   getValidInterfaces,
-  getBroadcastAddress
+  getNetworkAddress
 };
