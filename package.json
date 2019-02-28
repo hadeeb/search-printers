@@ -1,0 +1,20 @@
+{
+  "name": "search-printers",
+  "main": "./src/index.js",
+  "typings": "./printersearch.d.ts",
+  "version": "0.0.1",
+  "description": "Search for thermal printers in connected networks",
+  "keywords": [
+    "search",
+    "network",
+    "thermal",
+    "printer",
+    "epson"
+  ],
+  "author": "Hadeeb Farhan <hadeebfarhan1@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hadeeb/search-printers/issues"
+  },
+  "homepage": "https://github.com/hadeeb/search-printers#readme"
+}
