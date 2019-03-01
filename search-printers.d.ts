@@ -16,7 +16,7 @@ export declare namespace PrinterSearch {
     buffer?: Buffer;
   }
   interface Printer {
-    ip: string;
+    host: string;
     port: number;
     name: string;
   }

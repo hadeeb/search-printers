@@ -59,7 +59,7 @@ Returns **Array&lt;Printer&gt;**
 
 **Printer**
 
-- `ip` **string** : IPv4 address of the printer
+- `host` **string** : IPv4 address of the printer
 - `port` **number** : Network port in which printer is listening
 - `name` **string** : Name of the printer
 

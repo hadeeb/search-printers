@@ -1,7 +1,7 @@
 {
   "name": "search-printers",
   "main": "./src/index.js",
-  "typings": "./printersearch.d.ts",
+  "typings": "./search-printers.d.ts",
   "version": "0.0.2",
   "description": "Search for thermal printers in connected networks",
   "keywords": [

@@ -20,7 +20,7 @@ function tryConnect({ host, port, timeout, buffer }) {
       timeoutId = setTimeout(() => {
         serviceSocket.destroy();
         resolve({
-          ip: ip,
+          host: host,
           port: port,
           name: name.replace(/\0/g, "")
         });
