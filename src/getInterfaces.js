@@ -14,13 +14,14 @@ function getValidInterfaces() {
 function getBroadcastAddress(interfaceInfo) {
   let address = interfaceInfo.address.split(".");
   let netmask = interfaceInfo.netmask.split(".");
-  return address.map((e, i) => (~netmask[i] & 0xff) | e).join(".");
+  // AND with 0xff to remove prepended 1s
+  return address.map((e, i) => (~netmask[i] & 0xff) | e);
 }
 
 function getBaseAddress(interfaceInfo) {
   let address = interfaceInfo.address.split(".");
   let netmask = interfaceInfo.netmask.split(".");
-  return address.map((e, i) => netmask[i] & e).join(".");
+  return address.map((e, i) => netmask[i] & e);
 }
 
 function getNetworkAddress(interfaceInfo) {

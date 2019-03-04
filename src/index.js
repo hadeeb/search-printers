@@ -26,24 +26,36 @@ async function getPrinters(options) {
   const promises = [];
 
   ifaces.map(getNetworkAddress).forEach(({ base, broadcast }) => {
-    const minMasks = base.split(".");
-    const maxMasks = broadcast.split(".");
+    let isValid = base.every(mask => mask >= 0 && mask <= 255);
+    isValid = isValid && broadcast.every(mask => mask >= 0 && mask <= 255);
+    if (!isValid) return;
 
-    for (let i1 = minMasks[0]; i1 <= maxMasks[0]; i1++) {
-      for (let i2 = minMasks[1]; i2 <= maxMasks[1]; i2++) {
-        for (let i3 = minMasks[2]; i3 <= maxMasks[2]; i3++) {
-          for (let i4 = minMasks[3] + 1; i4 < maxMasks[3]; i4++) {
-            promises.push(
-              tryConnect({
-                host: i1 + "." + i2 + "." + i3 + "." + i4,
-                port: port,
-                timeout: timeout,
-                buffer: buffer
-              })
-            );
-          }
-        }
-      }
+    const startIP =
+      (base[0] << 24) | (base[1] << 16) | (base[2] << 8) | base[3];
+
+    const endIP =
+      (broadcast[0] << 24) |
+      (broadcast[1] << 16) |
+      (broadcast[2] << 8) |
+      broadcast[3];
+
+    for (let i = startIP + 1; i < endIP; i++) {
+      const ipParts = [
+        // AND with 0xff to remove prepended 1s
+        ((i & 0xff000000) >> 24) & 0xff,
+        (i2 = (i & 0x00ff0000) >> 16),
+        (i3 = (i & 0x0000ff00) >> 8),
+        (i4 = i & 0x000000ff)
+      ];
+
+      promises.push(
+        tryConnect({
+          host: ipParts.join("."),
+          port: port,
+          timeout: timeout,
+          buffer: buffer
+        })
+      );
     }
   });
 
