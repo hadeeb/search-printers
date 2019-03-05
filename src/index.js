@@ -43,9 +43,9 @@ async function getPrinters(options) {
       const ipParts = [
         // AND with 0xff to remove prepended 1s
         ((i & 0xff000000) >> 24) & 0xff,
-        (i2 = (i & 0x00ff0000) >> 16),
-        (i3 = (i & 0x0000ff00) >> 8),
-        (i4 = i & 0x000000ff)
+        (i & 0x00ff0000) >> 16,
+        (i & 0x0000ff00) >> 8,
+        i & 0x000000ff
       ];
 
       promises.push(
