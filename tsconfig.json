@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "es2018",
+    "declaration": true,
+    "declarationDir": "dist-dts",
+    "removeComments": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": false,
+    "strict": true
+  },
+  "include": [
+    "src"
+  ]
+}

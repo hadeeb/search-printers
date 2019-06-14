@@ -1,5 +1,5 @@
-const { getValidInterfaces, getNetworkAddress } = require("./getInterfaces");
-const { tryConnect } = require("./connect");
+import { Printer, tryConnect } from "./connect";
+import { getNetworkAddress, getValidInterfaces } from "./getInterfaces";
 
 const GET_PRINTER_NAME = Buffer.from([
   0x1b,
@@ -16,18 +16,27 @@ const GET_PRINTER_NAME = Buffer.from([
   0x42
 ]);
 
-async function getPrinters(options) {
-  options = options || {};
-  const timeout = options.timeout || 3000;
-  const port = options.port || 9100;
-  const buffer = options.buffer || GET_PRINTER_NAME;
+async function getPrinters(options: {
+  timeout?: number;
+  port?: number;
+  buffer?: Buffer;
+}): Promise<Printer[]> {
+  const { timeout, port, buffer } = Object.assign(
+    {
+      timeout: 3000,
+      port: 9100,
+      buffer: GET_PRINTER_NAME
+    },
+    options
+  );
 
   const ifaces = getValidInterfaces();
-  const promises = [];
+  const promises: Promise<Printer>[] = [];
 
   ifaces.map(getNetworkAddress).forEach(({ base, broadcast }) => {
-    let isValid = base.every(mask => mask >= 0 && mask <= 255);
-    isValid = isValid && broadcast.every(mask => mask >= 0 && mask <= 255);
+    let isValid = base.every((mask: number) => mask >= 0 && mask <= 255);
+    isValid =
+      isValid && broadcast.every((mask: number) => mask >= 0 && mask <= 255);
     if (!isValid) return;
 
     const startIP =
@@ -63,4 +72,4 @@ async function getPrinters(options) {
   return devices.filter(Boolean);
 }
 
-module.exports = getPrinters;
+export default getPrinters;

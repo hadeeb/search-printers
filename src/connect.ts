@@ -1,6 +1,24 @@
-const net = require("net");
+import * as net from "net";
 
-function tryConnect({ host, port, timeout, buffer }) {
+interface Options {
+  host: string;
+  port: number;
+  timeout: number;
+  buffer: Buffer;
+}
+
+export interface Printer {
+  host: string;
+  port: number;
+  name: string;
+}
+
+function tryConnect({
+  host,
+  port,
+  timeout,
+  buffer
+}: Options): Promise<Printer> {
   return new Promise(resolve => {
     let serviceSocket = net.connect(
       {
@@ -12,7 +30,7 @@ function tryConnect({ host, port, timeout, buffer }) {
         serviceSocket.write(buffer);
       }
     );
-    let timeoutId;
+    let timeoutId: NodeJS.Timeout;
     let name = "";
     serviceSocket.on("data", data => {
       name = name + data.toString("utf8");
@@ -37,4 +55,4 @@ function tryConnect({ host, port, timeout, buffer }) {
   });
 }
 
-module.exports = { tryConnect };
+export { tryConnect };

@@ -1,7 +1,7 @@
 {
   "name": "search-printers",
-  "main": "./src/index.js",
-  "typings": "./search-printers.d.ts",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
   "version": "0.0.4",
   "description": "Search for thermal printers in connected networks",
   "keywords": [
@@ -11,6 +11,9 @@
     "printer",
     "epson"
   ],
+  "files": [
+    "dist"
+  ],
   "author": "Hadeeb Farhan <hadeebfarhan1@gmail.com>",
   "license": "MIT",
   "engines": {
@@ -19,5 +22,24 @@
   "bugs": {
     "url": "https://github.com/hadeeb/search-printers/issues"
   },
-  "homepage": "https://github.com/hadeeb/search-printers#readme"
+  "homepage": "https://github.com/hadeeb/search-printers#readme",
+  "scripts": {
+    "prebuild": "rimraf dist && $npm_execpath run lint",
+    "build": "rollup -c",
+    "lint": "eslint src/**/*.ts --fix"
+  },
+  "devDependencies": {
+    "@types/node": "^12.0.8",
+    "@typescript-eslint/eslint-plugin": "^1.9.0",
+    "@typescript-eslint/parser": "^1.10.2",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "4.3.0",
+    "eslint-plugin-prettier": "3.1.0",
+    "eslint-plugin-simple-import-sort": "^3.1.1",
+    "prettier": "^1.18.2",
+    "rimraf": "^2.6.3",
+    "rollup": "^1.14.4",
+    "rollup-plugin-typescript2": "^0.21.1",
+    "typescript": "^3.5.1"
+  }
 }

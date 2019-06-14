@@ -1,8 +1,8 @@
-const os = require("os");
+import * as os from "os";
 
-function getValidInterfaces() {
+function getValidInterfaces(): os.NetworkInterfaceBase[] {
   const interfaces = os.networkInterfaces();
-  let validInterfaces = [];
+  let validInterfaces: os.NetworkInterfaceBase[] = [];
   Object.values(interfaces).forEach(inf => {
     validInterfaces = validInterfaces.concat(
       inf.filter(i => !i.internal && i.family === "IPv4")
@@ -11,27 +11,26 @@ function getValidInterfaces() {
   return validInterfaces;
 }
 
-function getBroadcastAddress(interfaceInfo) {
+function getBroadcastAddress(interfaceInfo: os.NetworkInterfaceBase): number[] {
   let address = interfaceInfo.address.split(".");
   let netmask = interfaceInfo.netmask.split(".");
   // AND with 0xff to remove prepended 1s
-  return address.map((e, i) => (~netmask[i] & 0xff) | e);
+  return address.map((e, i) => (~netmask[i] & 0xff) | (e as any));
 }
 
-function getBaseAddress(interfaceInfo) {
+function getBaseAddress(interfaceInfo: os.NetworkInterfaceBase): number[] {
   let address = interfaceInfo.address.split(".");
   let netmask = interfaceInfo.netmask.split(".");
-  return address.map((e, i) => netmask[i] & e);
+  return address.map((e, i) => (netmask[i] as any) & (e as any));
 }
 
-function getNetworkAddress(interfaceInfo) {
+function getNetworkAddress(
+  interfaceInfo: os.NetworkInterfaceBase
+): { base: number[]; broadcast: number[] } {
   return {
     base: getBaseAddress(interfaceInfo),
     broadcast: getBroadcastAddress(interfaceInfo)
   };
 }
 
-module.exports = {
-  getValidInterfaces,
-  getNetworkAddress
-};
+export { getValidInterfaces, getNetworkAddress };
