@@ -26,6 +26,7 @@
   "scripts": {
     "prebuild": "rimraf dist && $npm_execpath run lint",
     "build": "rollup -c",
+    "prepublishOnly": "$npm_execpath run build",
     "lint": "eslint src/**/*.ts --fix"
   },
   "devDependencies": {
