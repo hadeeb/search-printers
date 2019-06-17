@@ -16,11 +16,13 @@ const GET_PRINTER_NAME = Buffer.from([
   0x42
 ]);
 
-async function getPrinters(options: {
-  timeout?: number;
+interface Options {
   port?: number;
+  timeout?: number;
   buffer?: Buffer;
-}): Promise<Printer[]> {
+}
+
+async function getPrinters(options?: Options): Promise<Printer[]> {
   const { timeout, port, buffer } = Object.assign(
     {
       timeout: 3000,
@@ -71,5 +73,7 @@ async function getPrinters(options: {
   const devices = await Promise.all(promises);
   return devices.filter(Boolean);
 }
+
+export { Printer, Options };
 
 export default getPrinters;

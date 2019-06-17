@@ -1,3 +1,4 @@
+import Module from "module";
 import typescript from "rollup-plugin-typescript2";
 
 export default {
@@ -9,5 +10,5 @@ export default {
     }
   ],
   plugins: [typescript()],
-  external: ["net", "os"]
+  external: Module.builtinModules
 };

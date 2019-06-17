@@ -1,6 +1,6 @@
 import * as net from "net";
 
-interface Options {
+interface SearchOptions {
   host: string;
   port: number;
   timeout: number;
@@ -18,7 +18,7 @@ function tryConnect({
   port,
   timeout,
   buffer
-}: Options): Promise<Printer> {
+}: SearchOptions): Promise<Printer> {
   return new Promise(resolve => {
     let serviceSocket = net.connect(
       {
