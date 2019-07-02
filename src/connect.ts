@@ -32,21 +32,31 @@ function tryConnect({
     );
     let timeoutId: NodeJS.Timeout;
     let name = "";
-    serviceSocket.on("data", data => {
-      name = name + data.toString("utf8");
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => {
-        serviceSocket.destroy();
+
+    function resolveName(): void {
+      if (name) {
         resolve({
           host: host,
           port: port,
           name: name.replace(/\0/g, "")
         });
+      } else {
+        resolve();
+      }
+    }
+
+    serviceSocket.on("data", data => {
+      name = name + data.toString("utf8");
+      clearTimeout(timeoutId);
+
+      timeoutId = setTimeout(() => {
+        serviceSocket.destroy();
+        resolveName();
       }, timeout);
     });
     serviceSocket.on("timeout", () => {
       serviceSocket.destroy();
-      resolve();
+      resolveName();
     });
     serviceSocket.on("error", () => {
       serviceSocket.destroy();
