@@ -2,13 +2,11 @@ import * as os from "os";
 
 function getValidInterfaces(): os.NetworkInterfaceBase[] {
   const interfaces = os.networkInterfaces();
-  let validInterfaces: os.NetworkInterfaceBase[] = [];
-  Object.values(interfaces).forEach(inf => {
-    validInterfaces = validInterfaces.concat(
+  return Object.values(interfaces).reduce((validInterfaces, inf) => {
+    return validInterfaces.concat(
       inf.filter(i => !i.internal && i.family === "IPv4")
     );
-  });
-  return validInterfaces;
+  }, []);
 }
 
 function getBroadcastAddress(interfaceInfo: os.NetworkInterfaceBase): number[] {
