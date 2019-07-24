@@ -30,17 +30,17 @@
     "lint": "eslint src/**/*.ts --fix"
   },
   "devDependencies": {
-    "@types/node": "^12.0.10",
-    "@typescript-eslint/eslint-plugin": "^1.11.0",
-    "@typescript-eslint/parser": "^1.11.0",
-    "eslint": "^6.0.1",
+    "@types/node": "^12.6.8",
+    "@typescript-eslint/eslint-plugin": "^1.13.0",
+    "@typescript-eslint/parser": "^1.13.0",
+    "eslint": "^6.1.0",
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-simple-import-sort": "^4.0.0",
     "prettier": "^1.18.2",
     "rimraf": "^2.6.3",
-    "rollup": "^1.16.4",
-    "rollup-plugin-typescript2": "^0.21.2",
-    "typescript": "^3.5.2"
+    "rollup": "^1.17.0",
+    "rollup-plugin-typescript2": "^0.22.0",
+    "typescript": "^3.5.3"
   }
 }
